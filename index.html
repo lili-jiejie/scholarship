@@ -206,6 +206,30 @@
       render();
     });
 
+    document.addEventListener('keydown', event => {
+      if (event.repeat || event.altKey || event.ctrlKey || event.metaKey) return;
+      if (event.target instanceof HTMLElement &&
+          (event.target.isContentEditable || event.target.matches('input, textarea, select, button'))) return;
+
+      if (event.code === 'Space') {
+        event.preventDefault();
+        if (answerEl.classList.contains('visible')) {
+          nextButton.click();
+        } else {
+          answerButton.click();
+        }
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (currentIndex > 0) {
+          currentIndex -= 1;
+          render();
+        }
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        nextButton.click();
+      }
+    });
+
     render();
   </script>
 </body>
